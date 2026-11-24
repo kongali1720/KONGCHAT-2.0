@@ -1,13 +1,16 @@
-from fastapi import FastAPI, Depends, HTTPException, status, Query
+from fastapi import FastAPI, Depends, HTTPException, status, Query, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
+from jose import JWTError, jwt
 from sqlalchemy import or_
 
 from .config import APP_NAME
-from .database import Base, engine, get_db
+from .database import Base, engine, get_db, SessionLocal
 from .models import User, Conversation, ConversationMember, Message
 from .schemas import RegisterRequest, LoginRequest, TokenResponse, UserResponse, ConversationCreate, ConversationResponse, MessageCreate, MessageResponse, MessageHistoryResponse
 from .security import hash_password, verify_password, create_access_token
 from .auth import get_current_user
+from .config import JWT_SECRET, JWT_ALGORITHM
+from .realtime import manager
 
 Base.metadata.create_all(bind=engine)
 
@@ -323,3 +326,156 @@ def get_messages(
         "offset": offset,
         "has_more": has_more
     }
+
+
+# ### KONGCHAT REALTIME ENGINE v0.1 ###
+
+@app.websocket("/ws/conversations/{conversation_id}")
+async def realtime_conversation(
+    websocket: WebSocket,
+    conversation_id: int
+):
+    await websocket.accept()
+    db = SessionLocal()
+    connected = False
+
+    try:
+        # First frame must authenticate the connection.
+        try:
+            auth_frame = await websocket.receive_json()
+        except (ValueError, WebSocketDisconnect):
+            await websocket.close(code=1008)
+            return
+
+        if (
+            not isinstance(auth_frame, dict)
+            or auth_frame.get("type") != "auth"
+            or not isinstance(auth_frame.get("token"), str)
+        ):
+            await websocket.send_json({
+                "type": "error",
+                "detail": "Authentication frame required"
+            })
+            await websocket.close(code=1008)
+            return
+
+        # Validate JWT.
+        try:
+            payload = jwt.decode(
+                auth_frame["token"],
+                JWT_SECRET,
+                algorithms=[JWT_ALGORITHM]
+            )
+            user_id = int(payload["sub"])
+        except (JWTError, KeyError, TypeError, ValueError):
+            await websocket.send_json({
+                "type": "error",
+                "detail": "Invalid or expired authentication token"
+            })
+            await websocket.close(code=1008)
+            return
+
+        # Verify conversation exists.
+        conversation = (
+            db.query(Conversation)
+            .filter(Conversation.id == conversation_id)
+            .first()
+        )
+
+        if conversation is None:
+            await websocket.send_json({
+                "type": "error",
+                "detail": "Conversation not found"
+            })
+            await websocket.close(code=1008)
+            return
+
+        # Verify user membership.
+        membership = (
+            db.query(ConversationMember)
+            .filter(
+                ConversationMember.conversation_id == conversation_id,
+                ConversationMember.user_id == user_id
+            )
+            .first()
+        )
+
+        if membership is None:
+            await websocket.send_json({
+                "type": "error",
+                "detail": "You are not a member of this conversation"
+            })
+            await websocket.close(code=1008)
+            return
+
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if user is None:
+            await websocket.close(code=1008)
+            return
+
+        # Register authenticated connection.
+        manager.connect(conversation_id, websocket)
+        connected = True
+
+        await websocket.send_json({
+            "type": "authenticated",
+            "conversation_id": conversation_id,
+            "user_id": user_id
+        })
+
+        # Receive, validate, persist, then broadcast.
+        while True:
+            frame = await websocket.receive_json()
+
+            if not isinstance(frame, dict) or frame.get("type") != "message":
+                await websocket.send_json({
+                    "type": "error",
+                    "detail": "Unsupported event type"
+                })
+                continue
+
+            try:
+                message_data = MessageCreate.model_validate(frame)
+            except Exception:
+                await websocket.send_json({
+                    "type": "error",
+                    "detail": "Invalid message content"
+                })
+                continue
+
+            message = Message(
+                conversation_id=conversation_id,
+                sender_id=user_id,
+                content=message_data.content
+            )
+
+            db.add(message)
+
+            try:
+                db.commit()
+                db.refresh(message)
+            except Exception:
+                db.rollback()
+                await websocket.send_json({
+                    "type": "error",
+                    "detail": "Message persistence failed"
+                })
+                continue
+
+            serialized_message = MessageResponse.model_validate(
+                message
+            ).model_dump(mode="json")
+
+            await manager.broadcast(conversation_id, {
+                "type": "message",
+                "message": serialized_message
+            })
+
+    except WebSocketDisconnect:
+        pass
+
+    finally:
+        if connected:
+            manager.disconnect(conversation_id, websocket)
+        db.close()
