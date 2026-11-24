@@ -1,0 +1,24 @@
+name: KONGCHAT CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  repository-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check essential documentation
+        run: |
+          test -f README.md
+          test -f CONTRIBUTING.md
+          test -f docs/product/VISION.md
+          test -f docs/product/FEATURES.md
+          test -f docs/architecture/ARCHITECTURE.md
+          test -f docs/security/SECURITY-DESIGN.md
+          test -f docs/roadmap/ROADMAP.md
+      - name: Check whitespace errors
+        run: git diff --check
