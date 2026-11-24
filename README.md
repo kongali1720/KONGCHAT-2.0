@@ -187,7 +187,7 @@ ready for public release on Google Play Store and Apple App Store.
 
 ### Development Roadmap
 
-\`\`\`mermaid
+```mermaid
 flowchart TD
     A["KONGCHAT Backend Core"] --> B["Realtime Engine"]
     B --> C["Production API & Database"]
@@ -204,7 +204,12 @@ flowchart TD
     class A,B,C completed
     class D,E,F,G progress
     class H,I,J future
-\`\`\`
+
+    classDef completed fill:#166534,color:#ffffff,stroke:#22c55e
+    classDef progress fill:#854d0e,color:#ffffff,stroke:#facc15
+    classDef future fill:#1e3a8a,color:#ffffff,stroke:#60a5fa
+
+```
 
 ### Phase 1 — Backend Core
 
