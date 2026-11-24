@@ -24,19 +24,6 @@
 </p>
 <!-- KONGCHAT-2.0-HEADER-END -->
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/kongali1720/KongWallet-Payment-Gateway-API/main/kop_surat.jpg" width="100%">
-</p>
-
-# KONGCHAT 2.0
-
-<p align="center">
-  <strong>One Platform. Connected Conversations.</strong>
-</p>
-
-<p align="center">
-  <em>Satu Percakapan, Sejuta Terobosan!</em>
-</p>
 
 KONGCHAT is an independent open-source messaging platform designed to
 bring real-time communication, community spaces, terminal messaging,
