@@ -1,3 +1,29 @@
+<!-- KONGCHAT-2.0-HEADER-START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kongali1720/KONGCHAT-2.0/main/KONGCHAT%202.0%20Neon%20Ecosystem.png" alt="KONGCHAT 2.0 Neon Ecosystem" width="100%">
+</p>
+
+<h1 align="center">KONGCHAT 2.0</h1>
+
+<p align="center">
+  <strong>One Platform. Connected Conversations.</strong><br>
+  Satu Percakapan, Sejuta Terobosan!
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/stars/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Stars">
+  <img src="https://img.shields.io/github/forks/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Forks">
+  <img src="https://img.shields.io/github/issues/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Issues">
+  <img src="https://img.shields.io/github/last-commit/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Last Commit">
+</p>
+
+<p align="center">
+  <a href="https://github.com/kongali1720/KONGCHAT-2.0">Repository</a> •
+  <a href="https://github.com/kongali1720/KONGCHAT-2.0/issues">Issues</a> •
+  <a href="https://github.com/kongali1720/KONGCHAT-2.0/discussions">Discussions</a>
+</p>
+<!-- KONGCHAT-2.0-HEADER-END -->
+
 <p align="center">
 <img src="https://raw.githubusercontent.com/kongali1720/KongWallet-Payment-Gateway-API/main/kop_surat.jpg" width="100%">
 </p>
