@@ -6,8 +6,21 @@
 <h1 align="center">KONGCHAT 2.0</h1>
 
 <p align="center">
-  <strong>One Platform. Connected Conversations.</strong><br>
-  Satu Percakapan, Sejuta Terobosan!
+  <img src="https://img.shields.io/badge/CHAT-BACKEND-00D68F?style=for-the-badge&logo=chatbot&logoColor=white" alt="Chat Backend">
+  <img src="https://img.shields.io/badge/REALTIME-MESSAGING-00BFA5?style=for-the-badge&logo=socketdotio&logoColor=white" alt="Realtime Messaging">
+  <img src="https://img.shields.io/badge/WEBSOCKET-TRANSPORT-0088CC?style=for-the-badge&logo=websocket&logoColor=white" alt="WebSocket">
+  <img src="https://img.shields.io/badge/REST-API-6C63FF?style=for-the-badge&logo=fastapi&logoColor=white" alt="REST API">
+  <img src="https://img.shields.io/badge/MESSAGE-DELIVERY-FF9800?style=for-the-badge&logo=messenger&logoColor=white" alt="Message Delivery">
+  <img src="https://img.shields.io/badge/ONLINE-PRESENCE-20C997?style=for-the-badge&logo=statuspage&logoColor=white" alt="Presence">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/AUTHENTICATION-IDENTITY-3776AB?style=for-the-badge&logo=auth0&logoColor=white" alt="Authentication">
+  <img src="https://img.shields.io/badge/CONVERSATION-ENGINE-7B61FF?style=for-the-badge&logo=rocket&logoColor=white" alt="Conversation Engine">
+  <img src="https://img.shields.io/badge/MESSAGE-PERSISTENCE-4479A1?style=for-the-badge&logo=databricks&logoColor=white" alt="Message Persistence">
+  <img src="https://img.shields.io/badge/DATABASE-STORAGE-336791?style=for-the-badge&logo=postgresql&logoColor=white" alt="Database">
+  <img src="https://img.shields.io/badge/API-SECURITY-DC3545?style=for-the-badge&logo=owasp&logoColor=white" alt="API Security">
+  <img src="https://img.shields.io/badge/BACKEND-TESTING-25A162?style=for-the-badge&logo=pytest&logoColor=white" alt="Backend Testing">
 </p>
 
 <p align="center">
