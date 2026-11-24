@@ -1,11 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
 from .config import APP_NAME
 from .database import Base, engine, get_db
 from .models import User, Conversation, ConversationMember, Message
-from .schemas import RegisterRequest, LoginRequest, TokenResponse, UserResponse, ConversationCreate, ConversationResponse, MessageCreate, MessageResponse
+from .schemas import RegisterRequest, LoginRequest, TokenResponse, UserResponse, ConversationCreate, ConversationResponse, MessageCreate, MessageResponse, MessageHistoryResponse
 from .security import hash_password, verify_password, create_access_token
 from .auth import get_current_user
 
@@ -263,3 +263,63 @@ def send_message(
 
     return message
 
+
+
+# Message History Engine — Retrieve Messages
+
+@app.get(
+    "/v1/conversations/{conversation_id}/messages",
+    response_model=MessageHistoryResponse
+)
+def get_messages(
+    conversation_id: int,
+    limit: int = Query(default=50, ge=1, le=100),
+    offset: int = Query(default=0, ge=0),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    conversation = (
+        db.query(Conversation)
+        .filter(Conversation.id == conversation_id)
+        .first()
+    )
+
+    if conversation is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Conversation not found"
+        )
+
+    membership = (
+        db.query(ConversationMember)
+        .filter(
+            ConversationMember.conversation_id == conversation_id,
+            ConversationMember.user_id == current_user.id
+        )
+        .first()
+    )
+
+    if membership is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not a member of this conversation"
+        )
+
+    messages = (
+        db.query(Message)
+        .filter(Message.conversation_id == conversation_id)
+        .order_by(Message.id.asc())
+        .offset(offset)
+        .limit(limit + 1)
+        .all()
+    )
+
+    has_more = len(messages) > limit
+    messages = messages[:limit]
+
+    return {
+        "items": messages,
+        "limit": limit,
+        "offset": offset,
+        "has_more": has_more
+    }

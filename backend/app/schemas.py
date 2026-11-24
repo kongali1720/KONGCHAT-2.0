@@ -66,3 +66,12 @@ class MessageResponse(BaseModel):
 
     model_config = {"from_attributes": True}
 
+
+
+# Message History Engine Schemas
+
+class MessageHistoryResponse(BaseModel):
+    items: list[MessageResponse]
+    limit: int
+    offset: int
+    has_more: bool
