@@ -428,7 +428,27 @@ async def realtime_conversation(
         while True:
             frame = await websocket.receive_json()
 
-            if not isinstance(frame, dict) or frame.get("type") != "message":
+            if not isinstance(frame, dict):
+                await websocket.send_json({
+                    "type": "error",
+                    "detail": "Invalid event format"
+                })
+                continue
+
+            event_type = frame.get("type")
+
+            # Realtime typing indicator events.
+            if event_type in ("typing.start", "typing.stop"):
+                await manager.broadcast(conversation_id, {
+                    "type": "typing",
+                    "conversation_id": conversation_id,
+                    "user_id": user_id,
+                    "username": user.username,
+                    "status": "start" if event_type == "typing.start" else "stop"
+                })
+                continue
+
+            if event_type != "message":
                 await websocket.send_json({
                     "type": "error",
                     "detail": "Unsupported event type"

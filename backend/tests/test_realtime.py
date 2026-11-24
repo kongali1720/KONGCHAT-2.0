@@ -167,3 +167,68 @@ def test_realtime_non_member_rejected():
         assert "not a member" in response["detail"].lower()
 
     print("PASS: non-member access rejected")
+
+
+def test_realtime_typing_indicator_broadcast():
+    user1_id, token1 = register_and_login("rt_typing_sender")
+    user2_id, token2 = register_and_login("rt_typing_receiver")
+
+    conversation_id = create_conversation(
+        token1,
+        [user1_id, user2_id],
+    )
+
+    profile = client.get(
+        "/v1/users/me",
+        headers={"Authorization": f"Bearer {token1}"},
+    )
+    assert profile.status_code == 200, profile.text
+    username = profile.json()["username"]
+
+    with client.websocket_connect(
+        f"/ws/conversations/{conversation_id}"
+    ) as ws1:
+        with client.websocket_connect(
+            f"/ws/conversations/{conversation_id}"
+        ) as ws2:
+            websocket_auth(ws1, token1)
+            websocket_auth(ws2, token2)
+
+            # Typing START broadcast.
+            ws1.send_json({"type": "typing.start"})
+
+            received_start1 = ws1.receive_json()
+            received_start2 = ws2.receive_json()
+
+            for event in (received_start1, received_start2):
+                assert event["type"] == "typing"
+                assert event["conversation_id"] == conversation_id
+                assert event["user_id"] == user1_id
+                assert event["username"] == username
+                assert event["status"] == "start"
+
+            # Typing STOP broadcast.
+            ws1.send_json({"type": "typing.stop"})
+
+            received_stop1 = ws1.receive_json()
+            received_stop2 = ws2.receive_json()
+
+            for event in (received_stop1, received_stop2):
+                assert event["type"] == "typing"
+                assert event["conversation_id"] == conversation_id
+                assert event["user_id"] == user1_id
+                assert event["username"] == username
+                assert event["status"] == "stop"
+
+    # Typing events must not be persisted as chat messages.
+    history = client.get(
+        f"/v1/conversations/{conversation_id}/messages",
+        headers={"Authorization": f"Bearer {token1}"},
+    )
+
+    assert history.status_code == 200, history.text
+    assert history.json()["items"] == []
+
+    print("PASS: typing.start broadcast to both clients")
+    print("PASS: typing.stop broadcast to both clients")
+    print("PASS: typing events are not persisted")
