@@ -187,29 +187,7 @@ ready for public release on Google Play Store and Apple App Store.
 
 ### Development Roadmap
 
-```mermaid
-flowchart TD
-    A["KONGCHAT Backend Core"] --> B["Realtime Engine"]
-    B --> C["Production API & Database"]
-    C --> D["Mobile UI — React Native / Expo"]
-    D --> E["Android Internal Testing"]
-    D --> F["iOS TestFlight"]
-    E --> G["Security & QA"]
-    F --> G
-    G --> H["Google Play Review"]
-    G --> I["Apple App Review"]
-    H --> J["KONGCHAT Public Release"]
-    I --> J
-
-    class A,B,C completed
-    class D,E,F,G progress
-    class H,I,J future
-
-    classDef completed fill:#166534,color:#ffffff,stroke:#22c55e
-    classDef progress fill:#854d0e,color:#ffffff,stroke:#facc15
-    classDef future fill:#1e3a8a,color:#ffffff,stroke:#60a5fa
-
-```
+![KONGCHAT-2.0 Black Lime Product Roadmap](assets/images/kongchat-roadmap-black-lime.png)
 
 ### Phase 1 — Backend Core
 
