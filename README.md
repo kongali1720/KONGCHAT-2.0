@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://raw.githubusercontent.com/kongali1720/KongWallet-Payment-Gateway-API/main/kop_surat.jpg" width="100%">
+</p>
+
 # KONGCHAT 2.0
 
 <p align="center">
@@ -117,3 +121,31 @@ See [LICENSE](LICENSE).
 ---
 
 KONGCHAT 2.0 — One Platform. Connected Conversations.
+
+---
+
+## ☕ Support the Project
+
+If this project has helped your research, learning, or security operations, consider supporting its continued development.
+
+<div align="center">
+
+<a href="https://www.paypal.com/paypalme/bungtempong99">
+<img src="https://img.shields.io/badge/☕-Support_Development-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=000000">
+</a>
+
+</div>
+
+Your support helps sustain development, improve documentation,
+maintain existing projects, build new tools, and dedicate more time
+to open-source work.
+
+---
+
+<div align="center">
+
+### BUILD · SECURE · ANALYZE · INNOVATE
+
+**KONGALI1720 — Open Source Ecosystem**
+
+</div>
