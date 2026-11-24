@@ -177,3 +177,109 @@ to open-source work.
 **KONGALI1720 — Open Source Ecosystem**
 
 </div>
+
+---
+
+## KONGCHAT-2.0 — Product Roadmap
+
+Our goal is to build KONGCHAT into a real messaging application,
+ready for public release on Google Play Store and Apple App Store.
+
+### Development Roadmap
+
+\`\`\`mermaid
+flowchart TD
+    A["KONGCHAT Backend Core"] --> B["Realtime Engine"]
+    B --> C["Production API & Database"]
+    C --> D["Mobile UI — React Native / Expo"]
+    D --> E["Android Internal Testing"]
+    D --> F["iOS TestFlight"]
+    E --> G["Security & QA"]
+    F --> G
+    G --> H["Google Play Review"]
+    G --> I["Apple App Review"]
+    H --> J["KONGCHAT Public Release"]
+    I --> J
+
+    class A,B,C completed
+    class D,E,F,G progress
+    class H,I,J future
+\`\`\`
+
+### Phase 1 — Backend Core
+
+- Identity & Authentication Engine
+- Conversation Engine
+- Messaging Engine
+- Message History & Pagination
+- Authorization and access control
+- Automated regression tests
+
+### Phase 2 — Real-time Messaging
+
+- WebSocket connections
+- Real-time message delivery
+- Online/offline presence
+- Typing indicators
+- Message delivery states
+- Connection recovery and reconnection
+
+### Phase 3 — Chat Features
+
+- One-to-one conversations
+- Group conversations
+- User profiles and avatars
+- Reply to messages
+- Edit and delete messages
+- Read receipts
+- Message search
+- Image and file sharing
+
+### Phase 4 — Security & Production Infrastructure
+
+- PostgreSQL production database
+- Secure refresh-token flow
+- Rate limiting and anti-spam
+- Encryption in transit
+- Privacy and data deletion
+- Backup and recovery
+- Production deployment
+- Monitoring and logging
+
+### Phase 5 — Mobile Applications
+
+- Android application
+- iOS application
+- Authentication and registration
+- Conversation list
+- Chat interface
+- Push notifications
+- Contacts and user profiles
+- Responsive UI and accessibility
+
+**Mobile Framework:** React Native + Expo
+
+### Phase 6 — Beta Testing
+
+- Internal testing
+- Android closed testing
+- Apple TestFlight
+- Bug reports and fixes
+- Crash testing
+- Performance testing
+- Security review
+
+### Phase 7 — Store Launch
+
+- App icon and branding
+- Store screenshots
+- App descriptions and metadata
+- Privacy policy
+- Support website
+- Android App Bundle
+- iOS production build
+- Store submission and review
+
+**Final Goal:** KONGCHAT Public Release on Google Play Store and Apple App Store.
+
+> BUILD THE ENGINE, NOT JUST THE REPOSITORY.
