@@ -11,10 +11,12 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Stars">
-  <img src="https://img.shields.io/github/forks/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Forks">
-  <img src="https://img.shields.io/github/issues/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Issues">
-  <img src="https://img.shields.io/github/last-commit/kongali1720/KONGCHAT-2.0?style=for-the-badge" alt="Last Commit">
+  <img src="https://img.shields.io/github/languages/top/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=PRIMARY%20LANGUAGE" alt="Primary Language">
+  <img src="https://img.shields.io/github/languages/count/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=LANGUAGES" alt="Languages">
+  <img src="https://img.shields.io/github/repo-size/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=CODEBASE" alt="Codebase Size">
+  <img src="https://img.shields.io/github/commit-activity/m/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=DEVELOPMENT" alt="Commit Activity">
+  <img src="https://img.shields.io/github/contributors/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=CONTRIBUTORS" alt="Contributors">
+  <img src="https://img.shields.io/github/license/kongali1720/KONGCHAT-2.0?style=for-the-badge&label=LICENSE" alt="License">
 </p>
 
 <p align="center">
