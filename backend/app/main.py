@@ -4,8 +4,8 @@ from sqlalchemy import or_
 
 from .config import APP_NAME
 from .database import Base, engine, get_db
-from .models import User, Conversation, ConversationMember
-from .schemas import RegisterRequest, LoginRequest, TokenResponse, UserResponse, ConversationCreate, ConversationResponse
+from .models import User, Conversation, ConversationMember, Message
+from .schemas import RegisterRequest, LoginRequest, TokenResponse, UserResponse, ConversationCreate, ConversationResponse, MessageCreate, MessageResponse
 from .security import hash_password, verify_password, create_access_token
 from .auth import get_current_user
 
@@ -210,3 +210,56 @@ def get_conversation(
         "created_at": conversation.created_at,
         "member_ids": member_ids
     }
+
+# Messaging Engine — Send Message
+
+@app.post(
+    "/v1/conversations/{conversation_id}/messages",
+    response_model=MessageResponse,
+    status_code=status.HTTP_201_CREATED
+)
+def send_message(
+    conversation_id: int,
+    payload: MessageCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    conversation = (
+        db.query(Conversation)
+        .filter(Conversation.id == conversation_id)
+        .first()
+    )
+
+    if conversation is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Conversation not found"
+        )
+
+    membership = (
+        db.query(ConversationMember)
+        .filter(
+            ConversationMember.conversation_id == conversation_id,
+            ConversationMember.user_id == current_user.id
+        )
+        .first()
+    )
+
+    if membership is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You are not a member of this conversation"
+        )
+
+    message = Message(
+        conversation_id=conversation_id,
+        sender_id=current_user.id,
+        content=payload.content
+    )
+
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+
+    return message
+
