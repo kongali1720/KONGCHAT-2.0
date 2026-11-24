@@ -122,6 +122,41 @@ Start with:
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
 
+## 💰 Funding Plan
+
+KONGCHAT-2.0 has a proposed funding target of **IDR 2,000,000,000**
+to support product development, infrastructure, security, operations,
+compliance, launch preparation, and growth.
+
+<div align="center">
+
+![KONGCHAT-2.0 Funding Plan](assets/images/kongchat-funding-plan.png)
+
+</div>
+
+### Proposed Budget Allocation
+
+| Category | Proposed Allocation |
+|---|---:|
+| Product Development & Engineering | IDR 450,000,000 |
+| Infrastructure, Cloud & Servers | IDR 180,000,000 |
+| Security Audit, QA & Testing | IDR 200,000,000 |
+| Human Resources & Operations | IDR 420,000,000 |
+| Legal, Privacy & Compliance | IDR 80,000,000 |
+| Marketing & User Acquisition | IDR 250,000,000 |
+| Customer Support & Community | IDR 100,000,000 |
+| Contingency Reserve | IDR 320,000,000 |
+| **Total Proposed Funding Target** | **IDR 2,000,000,000** |
+
+> **Funding status:** This is a proposed funding target and budget plan.
+> It does not represent funds received, secured, or committed.
+
+Funding deployment will be milestone-based, with spending priorities
+reviewed against development progress, product readiness, security,
+and release requirements.
+
+---
+
 ## Roadmap
 
 The roadmap is maintained in [docs/roadmap/ROADMAP.md](docs/roadmap/ROADMAP.md).
